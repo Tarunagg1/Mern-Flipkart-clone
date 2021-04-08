@@ -1,0 +1,15 @@
+backed port = 4000
+####### auth routes  
+user login -> http://localhost:4000/api/signin
+user register -> http://localhost:4000/api/signup
+admin login -> http://localhost:4000/api/admin/signin
+admin register -> http://localhost:4000/api/admin/signup
+
+############ react app admin port = 3000
+
+
+
+############ react app client port = 5000
+
+
+
