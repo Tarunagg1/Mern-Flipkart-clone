@@ -1,9 +1,9 @@
 const userModel = require('../../models/user');
 const jwt = require('jsonwebtoken');
+const shortid = require('shortid');
 
 exports.signup = (req, res) => {
     const { firstname, lastname, email, password } = req.body;
-    console.log(email);
     userModel.findOne({ email })
         .exec((err, user) => {
             if (user) {
@@ -11,8 +11,8 @@ exports.signup = (req, res) => {
                     message: "admin Allready exists"
                 });
             }
-            const _newuser = new userModel({ firstname, lastname, username: Math.random().toString(), email, password, role: 'admin' });
-            console.log(_newuser);
+            const _newuser = new userModel({ firstname, lastname, username: shortid.generate(), email, password, role: 'admin' });
+            // console.log(_newuser);
             _newuser.save((err, data) => {
                 if (err) {
                     return res.status(400).json({ message: "something went wrong" });
@@ -33,8 +33,9 @@ exports.signin = async (req, res) => {
                 return res.status(400).json({ message: "You are not admin" });
             }
             if (user.authenticate(password)) {
-                const token = await jwt.sign({ _id: user._id }, process.env.SECRET_TOKEN, { expiresIn: '15d' });
-                const { firstname, lastname, email, role, fullname } = user;
+                const token = await jwt.sign({ _id: user._id, role: user.role }, process.env.SECRET_TOKEN, { expiresIn: '15d' });
+                const { firstname, lastname, email, fullname } = user;
+                res.cookie('token', token, { expiresIn: '1h' });
                 return res.status(200).json({ message: "admin Login", token, user: { firstname, lastname, email, role: 'admin', fullname } });
             } else {
                 return res.status(400).json({ message: "Invalid email or password" });
@@ -43,7 +44,13 @@ exports.signin = async (req, res) => {
             return res.status(400).json({ message: "Invalid email or password" });
         }
     } catch (error) {
-        return res.status(400).send({ message: "something went wrong" });
+        return res.status(400).send({ message: "something went wrong", error });
     }
 }
 
+exports.signOut = async (req, res) => {
+    res.clearCookie('token');
+    return res.status(200).json({
+        mmessage:"Signout successfully..."
+    })
+}

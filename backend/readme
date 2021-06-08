@@ -5,7 +5,23 @@ user register -> http://localhost:4000/api/signup
 admin login -> http://localhost:4000/api/admin/signin
 admin register -> http://localhost:4000/api/admin/signup
 
+////// category routes
+add category -> http://localhost:4000/api/category/create
+get category -> http://localhost:4000/api/category/getcategory
+
+///// product route
+add product -> http://localhost:4000/api/product/create
+//get product -> http://localhost:4000/api/product/getproduct\
+
+
+///// cart route
+add product to cart -> http://localhost:4000/api/cart/addtocart
+//get product -> http://localhost:4000/api/product/getproduct
+
+
+
 ############ react app admin port = 3000
+
 
 
 
