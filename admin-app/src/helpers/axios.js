@@ -12,28 +12,28 @@ const axiosinstance = axios.create({
     }
 });
 
-axiosinstance.interceptors.request.use((req) => {
-    const {auth} = store.getState()
-    // console.log(auth.token);
-    if(auth.token){
-        req.headers.Authrization = `Bearear ${token}`
-    }
-    return req
-})
+// axiosinstance.interceptors.request.use((req) => {
+//     const { auth } = store.getState()
+//     if (auth.token) {
+//         // console.log(auth.token);
+//         req.headers.Authrization = `Bearear ${token}`
+//     }
+//     return req
+// })
 
-axiosinstance.interceptors.response.use((res) => {
-    return res;
-},(error) => {
-    console.log(error.response);
-    const {status} = error.response;
-    if(status === 500){
-        localStorage.clear('token');
-        store.dispatch({
-            type:authConstants.LOGOUT_SUCCESS
-        })
-    }
-    return Promise.reject(error);
-})
+// axiosinstance.interceptors.response.use((res) => {
+//     return res;
+// }, (error) => {
+//     // console.log(error.response);
+//     const { status } = error.response.status ?error.response.status : 500 ;
+//     if (status && status === 500) {
+//         localStorage.clear('token');
+//         store.dispatch({
+//             type: authConstants.LOGOUT_SUCCESS
+//         })
+//     }
+//     return Promise.reject(error);
+// })
 
 
 

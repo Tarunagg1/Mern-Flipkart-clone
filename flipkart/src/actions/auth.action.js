@@ -1,16 +1,16 @@
 import axios from '../helpers/axios'
-import { authConstants } from "./constants"
+import { authConstants, cartConstant } from "./constants"
 
 export const login = (User) => {
     return async (dispatch) => {
         dispatch({ type: authConstants.LOGIN_REQUEST })
         try {
-            const resp = await axios.post('/admin/signin', User);
+            const resp = await axios.post('/signin', User);
+            console.log(resp);
             const { token, user } = resp.data;
             localStorage.setItem('token', token);
             localStorage.setItem('user', JSON.stringify(user))
             dispatch({ type: authConstants.LOGIN_SECCESS, payload: { user, token } })
-
         } catch (error) {
             console.log(error.response);
             dispatch({ type: authConstants.LOGIN_FAIL, payload: { error: error.response } })
@@ -33,17 +33,21 @@ export const isuserLogiIn = () => {
 
 export const signOut = () => {
     return async dispatch => {
-        try {
-            dispatch({type:authConstants.LOGOUT_REQUEST});
-            const {data} = await axios.post('/admin/signout');
-            console.log(data);
-            localStorage.clear();
-            // dispatch({ type: authConstants.LOGOUT });
-            dispatch({type:authConstants.LOGOUT_SUCCESS});
-        } catch (error) {
-            console.log(error);
-            dispatch({type:authConstants.LOGOUT_FAILURE,payload:error.data})
-        }
+        dispatch({ type: authConstants.LOGOUT_REQUEST });
+        // localStorage.removeItem('user');
+        // localStorage.removeItem('token');
+        localStorage.clear();
+        dispatch({ type: authConstants.LOGOUT_SUCCESS });
+        dispatch({type:cartConstant.RESET_CART});
+        // try {
+
+        //     // const {data} = await axios.post('/user/signout');
+        //     // console.log(data);
+        //     // dispatch({ type: authConstants.LOGOUT });
+        // } catch (error) {
+        //     console.log(error);
+        //     dispatch({type:authConstants.LOGOUT_FAILURE,payload:error.data})
+        // }
     }
 }
 

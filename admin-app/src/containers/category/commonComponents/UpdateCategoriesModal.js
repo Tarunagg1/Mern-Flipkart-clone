@@ -7,13 +7,13 @@ import { Col, Row } from 'react-bootstrap';
 
 const UpdateCategoriesModal = (props) => {
 
-    const {size,show,handleClose,modalTitle,expendetAray,checkedArray,handelCategoryInput,CategoryList,Parentcat} = props;
+    const {size,show,hidemodal,onSubmit,modalTitle,expendetAray,checkedArray,handelCategoryInput,CategoryList,Parentcat} = props;
 
     return (
-
         <Newmodal
             show={show}
-            handleClose={handleClose}
+            handleClose={hidemodal}
+            onSubmit={onSubmit}
             modalTitle={modalTitle}
             size={size}
         >
@@ -37,7 +37,7 @@ const UpdateCategoriesModal = (props) => {
                         </Col>
                         <Col>
                             <label>Select Type</label>
-                            <select className="form-control" name="type" id="type">
+                            <select value={item.type} className="form-control" onChange={(e) => handelCategoryInput('type',e.target.value,index,"checked")} name="type" id="type">
                                 <option value="">Select Type</option>
                                 <option value="store">Store</option>
                                 <option value="product">Product</option>
@@ -68,7 +68,7 @@ const UpdateCategoriesModal = (props) => {
                         </Col>
                         <Col>
                             <label>Select Type</label>
-                            <select className="form-control" name="type" id="type">
+                            <select value={item.type} className="form-control" onChange={(e) => handelCategoryInput('type',e.target.value,index,"checked")} name="type" id="type">
                                 <option value="">Select Type</option>
                                 <option value="store">Store</option>
                                 <option value="product">Product</option>

@@ -67,3 +67,16 @@ exports.getProductBySlug = (req, res) => {
         })
 }
 
+
+exports.getProductDetailsById = (req, res) => {
+    const { pid } = req.params;
+    productModel.findOne({ _id: pid })
+        .exec((err, product) => {
+            if (err) {
+                return res.status(200).json({ message: "Product not found", err })
+            }
+            if (product) {
+                return res.status(200).json({ product })
+            }
+        })
+}

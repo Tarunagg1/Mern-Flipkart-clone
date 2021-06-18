@@ -11,29 +11,31 @@ import Products from './components/products';
 import Order from './containers/orders';
 import Category from './containers/category';
 import { getAllCategory, getProducts } from './actions';
+import page from './containers/newPage';
 
 export default function App() {
   const dispatch = useDispatch()
 
-  const { authenticate } = useSelector(state => state.auth);
+  const au = useSelector(state => state.auth);
 
   useEffect(() => {
-    if (!authenticate) {
+    if (!au.authenticate) {
       dispatch(isuserLogiIn());
     }
 
-      dispatch(getAllCategory());
-      dispatch(getProducts());
+    dispatch(getProducts());
+    dispatch(getAllCategory());
+
   }, [])
 
   return (
     <div className="App">
       <Switch>
         <PrivateRoute path="/" exact component={Home} />
+        <PrivateRoute path="/page" exact component={page} />
         <PrivateRoute path="/products" exact component={Products} />
-        <PrivateRoute path="/orders" exact component={Order} />  
-        <PrivateRoute path="/category" exact component={Category} />  
-              
+        <PrivateRoute path="/orders" exact component={Order} />
+        <PrivateRoute path="/category" exact component={Category} />
         <Route path="/signin" exact component={Signin} />
         <Route path="/signup" exact component={Signup} />
       </Switch>

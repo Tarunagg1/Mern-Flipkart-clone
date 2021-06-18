@@ -19,7 +19,7 @@ export default function MenuHeader() {
             cat.push(
                 <li key={cat.name}>
                     {
-                        category.parentid !== "undefined" ? <a href={category.slug}>{category.name}</a> : <span>{category.name}</span>
+                        category.parentid !== "undefined" ? <a href={`/${category.slug}?cid=${category._id}&type=${category.type}`}>{category.name}</a> : <span>{category.name}</span>
                     }
                     {
                         category.children.length > 0 ? (

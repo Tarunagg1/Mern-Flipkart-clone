@@ -15,7 +15,7 @@ export default function Newmodal(props) {
                     props.buttons ? props.buttons.map((btn,index) => 
                         <Button key={index} variant={btn.color} onClick={btn.onClick}>{btn.label}</Button>
                     ) : (
-                        <Button variant="secondary" onClick={props.handleClose}> Add </Button>
+                        <Button variant="secondary" onClick={props.onSubmit}> Add </Button>
                     )
                 }
             </Modal.Footer>

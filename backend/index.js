@@ -8,6 +8,7 @@ const adminAuthRoute = require('./routes/admin/authRoutes');
 const caregoryRoute = require('./routes/categoryRoute');
 const productRoute = require('./routes/productRouute');
 const cartRoute = require('./routes/cartRoute');
+const pageRoute = require('./routes/admin/pageRoute');
 const path = require('path');
 
 
@@ -28,6 +29,7 @@ app.use('/api', adminAuthRoute);
 app.use('/api', caregoryRoute);
 app.use('/api', productRoute);
 app.use('/api', cartRoute);
+app.use('/api', pageRoute);
 
 
 

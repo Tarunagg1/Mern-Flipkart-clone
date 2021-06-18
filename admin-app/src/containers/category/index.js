@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Layout from '../../components/layout/Layout'
 import { Col, Container, Row } from 'react-bootstrap';
-import { addCategory, getAllCategory, updateCategorirs, deleteCategorirs as deleteCategoriesAction } from '../../actions';
+import { addCategory, updateCategorirs, deleteCategorirs as deleteCategoriesAction } from '../../actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Newmodal from '../../components/Modal';
 import CheckboxTree from 'react-checkbox-tree';
@@ -27,7 +27,7 @@ export default function Category() {
     const { categories } = useSelector(state => state.category);
     const [deleteCategoryModal, setDeleteCategoryModal] = useState(false);
 
-    const handleClose = () => {
+    const submitAddcat = () => {
         var formData = new FormData();
         // if(categoryname == ""){
         //     alert("Name Is required");
@@ -40,7 +40,7 @@ export default function Category() {
         setParentCategory();
         setCategoryName('');
         sercategoryImage('');
-        setShow(false);
+        setShow(false)
     };
 
 
@@ -64,7 +64,7 @@ export default function Category() {
         if (categories) {
             for (let category of categories) {
                 // console.log(category);
-                options.push({ value: category._id, name: category.name, parentId: category.parentid });
+                options.push({ value: category._id, name: category.name, parentId: category.parentid,type:category.type });
 
                 if (category.children.length > 0) {
                     CreateCategoryList(category.children, options);
@@ -107,6 +107,7 @@ export default function Category() {
 
 
     const handelCategoryInput = (key, value, index, type) => {
+        console.log(key,value);
         if (type === "checked") {
             const updatedcheckedarray = checkedArray.map((item, _index) => index === _index ? { ...item, [key]: value } : item);
             setCheckedArray(updatedcheckedarray)
@@ -151,13 +152,8 @@ export default function Category() {
 
         if (checkedidsArray.length > 0) {
             dispatch(deleteCategoriesAction(checkedidsArray))
-                .then((respdispatch) => {
-                    if (respdispatch) {
-                        setDeleteCategoryModal(false);
-                        dispatch(getAllCategory())
-                    }
-                });
         }
+        setDeleteCategoryModal(false);
     }
 
     const renderDeleteCategoryModal = () => {
@@ -196,7 +192,7 @@ export default function Category() {
     }
 
     return (
-        <div>
+        <>
             <Layout sidebar>
                 <Container fluid>
                     <Row>
@@ -238,7 +234,8 @@ export default function Category() {
 
             <UpdateCategoriesModal
                 show={updateCategoryModal}
-                handleClose={updateCategoriesForm}
+                hidemodal={() => setUpdateCategoryModal(false)}
+                onSubmit={updateCategoriesForm}
                 modalTitle="Update Categories"
                 size="lg"
                 expendetAray={expendetAray}
@@ -249,9 +246,10 @@ export default function Category() {
 
             <AddCategoryModal
                 show={show}
-                handleClose={handleClose}
+                submitAddcat={submitAddcat}
                 modalTitle="Add New Category"
                 setCategoryName={setCategoryName}
+                setShow={() => setShow(false)}
                 CategoriesList={CreateCategoryList(categories)}
                 setParentCategory={setParentCategory}
                 handelCategoryImage={handelCategoryImage}
@@ -260,6 +258,6 @@ export default function Category() {
             />
             {/* {renderUpdateCategoriesModal()} */}
             {renderDeleteCategoryModal()}
-        </div>
+        </>
     )
 }

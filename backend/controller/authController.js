@@ -32,7 +32,7 @@ exports.signin = async (req, res) => {
         const user = await userModel.findOne({ email });
         // console.log(user);
         if (user) {
-            if (user.authenticate(password)) {
+            if (user.authenticate(password) && user.role === 'user') {
                 const token = await jwt.sign({ _id: user._id, role: user.role }, process.env.SECRET_TOKEN, { expiresIn: '15d' });
                 const { firstname, lastname, email, role, fullname } = user;
                 return res.status(200).json({ message: "user Login", token, user: { firstname, lastname, email, role, fullname } });

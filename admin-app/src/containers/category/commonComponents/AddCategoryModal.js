@@ -4,12 +4,13 @@ import Newmodal from '../../../components/Modal';
 import Input from '../../../components/Ui/Input';
 
 const AddCategoryModal = (props) => {
-    const { show, handleClose, modalTitle, setCategoryName, CategoriesList, setParentCategory, handelCategoryImage } = props;
+    const { show,setShow, submitAddcat, modalTitle, setCategoryName, CategoriesList, setParentCategory, handelCategoryImage } = props;
 
     return (
         <Newmodal
             show={show}
-            handleClose={handleClose}
+            onSubmit={submitAddcat}
+            handleClose={setShow}
             modalTitle={modalTitle}
         >
             <Row>

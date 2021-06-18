@@ -17,6 +17,7 @@ const buildNewcategories = (parentId, categories, category) => {
                 name: category.name,
                 slug: category.slug,
                 parentId: category.parentId,
+                type: category.type,
                 children: []
             }
         ];
@@ -30,7 +31,8 @@ const buildNewcategories = (parentId, categories, category) => {
                 name: category.name,
                 slug: category.slug,
                 parentId: category.parentId,
-                children:[]
+                type: category.type,
+                children: []
             }
 
             mycaregories.push({
@@ -64,11 +66,17 @@ export default (state = initState, action) => {
         case categoryConstant.ADD_NEW_CATEGORY_FAIl:
             return { ...state, loading: false }
         case categoryConstant.UPDATE_CATEGORIES_REQUEST:
-            return {...state,loading:true}
+            return { ...state, loading: true }
         case categoryConstant.UPDATE_CATEGORIES_SUCCESS:
-            return {...state,loading:false}
+            return { ...state, loading: false }
         case categoryConstant.UPDATE_CATEGORIES_FALIUR:
-            return {...state,loading:false}
+            return { ...state, loading: false }
+        case categoryConstant.DELETE_CATEGORIES_REQUEST:
+            return { ...state, loading: true }
+        case categoryConstant.DELETE_CATEGORIES_SUCCESS:
+            return { ...state, loading: false }
+        case categoryConstant.DELETE_CATEGORIES_FAILUER:
+            return { ...state, loading: false }
         default:
             return { ...state }
     }

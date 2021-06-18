@@ -49,22 +49,18 @@ export const updateCategorirs = (form)=>{
 export const deleteCategorirs = (ides)=>{
     return async (dispatch)=>{
         try {
-            // dispatch({type:categoryConstant.ADD_NEW_CATEGORY_REQUEST});
+            dispatch({type:categoryConstant.DELETE_CATEGORIES_REQUEST});
             const resp = await axios.post('/category/delete',{
                 payload:{
                     ides
                 }
             });
             if(resp.status === 201){
-                return true;
-            }else{
-                return false;
+                dispatch(getAllCategory());
+                dispatch({type:categoryConstant.DELETE_CATEGORIES_SUCCESS});
             }
-            // dispatch({type:categoryConstant.ADD_NEW_CATEGORY_SUCCESS,payload:{category:resp.data.category}});
-            // console.log(resp);
         } catch (error) {
-            // console.log();
-            // dispatch({type:categoryConstant.ADD_NEW_CATEGORY_FAIl,payload:error.response.data.error});
+            dispatch({type:categoryConstant.UPDATE_CATEGORIES_FALIUR,payload:error});
             console.log(error);
         }
     }
