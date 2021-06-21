@@ -10,7 +10,7 @@ import {
     DropdownMenu
 } from '../Matrialui';
 import { useDispatch, useSelector } from 'react-redux';
-import { login,signOut } from '../../actions/auth.action';
+import { login, signOut } from '../../actions/auth.action';
 import { useHistory } from 'react-router-dom';
 
 
@@ -20,7 +20,7 @@ const Header = (props) => {
     const [loginModal, setLoginModal] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { authenticate,user } = useSelector(state => state.auth);
+    const { authenticate, user } = useSelector(state => state.auth);
 
     const userLogin = () => {
         dispatch(login({ email, password }));
@@ -28,15 +28,15 @@ const Header = (props) => {
 
     const history = useHistory();
 
-    const logOut = ()=>{
+    const logOut = () => {
         dispatch(signOut());
     }
 
-    // useEffect(() => {
-    //     // if(authenticate){
-
-    //     // }
-    // }, [authenticate])
+    useEffect(() => {
+        if (authenticate) {
+            setLoginModal(false);
+        }
+    }, [authenticate])
 
     const renderLoginMenu = () => {
         return (
@@ -56,10 +56,10 @@ const Header = (props) => {
                     { label: 'Coupens', href: '', icon: null },
                     { label: 'Rewards', href: '', icon: null },
                     { label: 'Notifications', href: '', icon: null },
-                    { label: 'Logout', href: '', icon: null,onClick:logOut },
-                    
+                    { label: 'Logout', href: '', icon: null, onClick: logOut },
+
                 ]}
-             
+
             />
         )
     }
@@ -104,42 +104,43 @@ const Header = (props) => {
                             <p>Get access to your Orders, Wishlist and Recommendations</p>
                         </div>
                         <div className="rightspace">
+                            <div className="loginInputContainer">
 
+                                <MaterialInput
+                                    type="text"
+                                    label="Enter Email/Enter Mobile Number"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
 
-                            <MaterialInput
-                                type="text"
-                                label="Enter Email/Enter Mobile Number"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
+                                <MaterialInput
+                                    type="password"
+                                    label="Enter Password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    rightElement={<a href="#">Forgot?</a>}
+                                />
+                                <MaterialButton
+                                    title="Login"
+                                    bgColor="#fb641b"
+                                    textColor="#ffffff"
+                                    style={{
+                                        margin: '50px 0'
+                                    }}
+                                    onClick={userLogin}
+                                />
 
-                            <MaterialInput
-                                type="password"
-                                label="Enter Password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                rightElement={<a href="#">Forgot?</a>}
-                            />
-                            <MaterialButton
-                                title="Login"
-                                bgColor="#fb641b"
-                                textColor="#ffffff"
-                                style={{
-                                    margin: '50px 0'
-                                }}
-                                onClick={userLogin}
-                            />
+                                <p style={{textAlign:'center'}}>Or</p>
 
-                            <p>Or</p>
-
-                            <MaterialButton
-                                title="Requets Otp"
-                                bgColor="#ffffff"
-                                textColor="#fb641b"
-                                style={{
-                                    margin: '30px 0'
-                                }}
-                            />
+                                <MaterialButton
+                                    title="Requets Otp"
+                                    bgColor="#ffffff"
+                                    textColor="#fb641b"
+                                    style={{
+                                        margin: '30px 0'
+                                    }}
+                                />
+                            </div>
 
                         </div>
                     </div>
@@ -200,7 +201,7 @@ const Header = (props) => {
                         ]}
                     />
                     <div>
-                        <a onClick={()=> history.push('/cart')} className="cart">
+                        <a onClick={() => history.push('/cart')} className="cart">
                             <IoIosCart />
                             <span style={{ margin: '0 10px' }}>Cart</span>
                         </a>

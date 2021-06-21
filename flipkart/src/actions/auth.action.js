@@ -39,15 +39,6 @@ export const signOut = () => {
         localStorage.clear();
         dispatch({ type: authConstants.LOGOUT_SUCCESS });
         dispatch({type:cartConstant.RESET_CART});
-        // try {
-
-        //     // const {data} = await axios.post('/user/signout');
-        //     // console.log(data);
-        //     // dispatch({ type: authConstants.LOGOUT });
-        // } catch (error) {
-        //     console.log(error);
-        //     dispatch({type:authConstants.LOGOUT_FAILURE,payload:error.data})
-        // }
     }
 }
 
@@ -66,7 +57,6 @@ export const signUp = (User) => {
             console.log(data);
             dispatch({ type: authConstants.REGISTER_FAIL, payload: data })
             dispatch({ type: authConstants.REGISTER_REQUEST_DONE })
-
         }
 
     }

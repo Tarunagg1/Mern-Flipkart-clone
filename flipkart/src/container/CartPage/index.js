@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Layout from "../../components/Layout";
 import Card from "../../container/Ui/Card/Card";
-// import CartItem from "./CartItem";
 import { getCartItems } from "../../actions";
 // import PriceDetails from "../../";
 
@@ -107,6 +106,7 @@ const CartPage = (props) => {
             return totalPrice + price * qty;
           }, 0)}
         /> */}
+        <Card headerLeft="Price" style={{width:'380px'}} />
       </div>
     </Layout>
   );

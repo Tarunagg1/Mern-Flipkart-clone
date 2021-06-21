@@ -9,11 +9,6 @@ const initialState = {
 export default (state=initialState,action) => {
     const {payload,type} = action;
     switch (type) {
-        // case cartConstant.ADD_TO_CART:
-        //   return  state={
-        //         ...state,
-        //         cartItems:payload.cartItems
-        //     }
         case cartConstant.ADD_TO_CART_REQUEST:
             return {...state,updatingCart:true}
         
